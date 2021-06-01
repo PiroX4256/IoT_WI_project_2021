@@ -12,6 +12,7 @@ port = 1883
 topic = "#"
 client_id = "vechus_pirox_mqtt"
 output_file_name = "dataset.dat"
+output_file_name_hidden = "hidden_dataset.dat"
 
 
 def connect_mqtt() -> mqtt_client:
@@ -37,7 +38,7 @@ def subscribe(client: mqtt_client):
             print("Write this into dataset...")
             line = msg.topic + '\t' + coords + '\t' + payload + '\n'
             with open(output_file_name, 'a+') as f:
-                if not any(line == x.rstrip('\r\n') for x in f):
+                if not any(line == x.rstrip('\n') for x in f):
                     f.write(line)
                 else:
                     print("Already there....")
@@ -46,9 +47,24 @@ def subscribe(client: mqtt_client):
     client.on_message = on_message
 
 
+def find_hidden_resources(client: mqtt_client):
+    def on_message(client, userdata, msg):
+        print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        if '/root/' in msg.payload.decode():
+            print(msg.payload.decode())
+            with open(output_file_name_hidden, 'a+') as f:
+                if not any(msg.payload.decode() == x.rstrip('\n') for x in f):
+                    f.write(msg.payload.decode() + '\n')
+                else:
+                    print("Already there....")
+
+    client.subscribe(topic)
+    client.on_message = on_message
+
 def run():
     client = connect_mqtt()
-    subscribe(client)
+    #subscribe(client)
+    find_hidden_resources(client)
     client.loop_forever()
 
 
