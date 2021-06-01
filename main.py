@@ -3,8 +3,8 @@ from parse import *
 
 def print_coords(dataset):
     missing = []
-    for i in range(0, 10, 2):
-        for j in range(0, 10, 2):
+    for i in range(0, 11, 2):
+        for j in range(0, 11, 2):
             if (i, j) not in dataset.keys():
                 missing.append((i, j))
                 continue
@@ -26,7 +26,7 @@ def get_dataset(filename):
 
             if result is not None:
                 x, y = float(result[0]), float(result[1])
-                rssi_str = [result[i] for i in range(2, 7)]
+                rssi_str = [[int(n) for n in result[i].strip('\n').split(',')] for i in range(2, 8)]
                 dataset_local[(x, y)] = rssi_str
             else:
                 print('Parser error: \n' + line)
@@ -34,7 +34,6 @@ def get_dataset(filename):
     return dataset_local
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     dataset = get_dataset('dataset.dat')
     print_coords(dataset)
