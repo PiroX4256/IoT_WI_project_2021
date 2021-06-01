@@ -98,7 +98,7 @@ async def main():
                         print("LUL")
                         print(r.payload)'''
             #else:
-            request2 = Message(code=aiocoap.Code.GET,
+            '''request2 = Message(code=aiocoap.Code.GET,
                                uri='coap://ec2-54-156-245-154.compute-1.amazonaws.com' + url.get('url'))
             response2 = await connection.request(request2).response
             if response2.payload.decode() != "":
@@ -128,7 +128,7 @@ async def main():
             if response2.payload.decode() != "":
                 print("DELETE")
                 print(response2.payload.decode())
-                parsing(response2.payload.decode(), url)
+                parsing(response2.payload.decode(), url)'''
 
 
 if __name__ == "__main__":
