@@ -1,4 +1,5 @@
 from parse import *
+from statistics import mean
 
 
 def print_coords(dataset):
@@ -34,6 +35,18 @@ def get_dataset(filename):
     return dataset_local
 
 
+def compute_signal_strength(dataset):
+    signal_dict = {}
+    for key in dataset.keys():
+        avg_list = []
+        for antenna_signals in dataset[key]:
+            avg_list.append(mean(antenna_signals))
+        signal_dict[key] = avg_list
+
+    return signal_dict
+
+
 if __name__ == '__main__':
     dataset = get_dataset('dataset.dat')
     print_coords(dataset)
+    print_coords(compute_signal_strength(dataset))
