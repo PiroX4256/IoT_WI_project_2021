@@ -30,5 +30,5 @@ if __name__ == '__main__':
     # uncomment this line to export the computed average for each entry in the dataset
     # export_dataset(compute_signal_strength(dataset), 'computed_dataset.dat')
 
-    # distances = get_distances(NEMO_RSSI, computed_dataset, debug=True)
-    # print(distances)
+    distances = get_distances(NEMO_RSSI, computed_dataset, debug=True)
+    print(distances)
