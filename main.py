@@ -28,7 +28,10 @@ if __name__ == '__main__':
     print_coords(computed_dataset)
 
     # uncomment this line to export the computed average for each entry in the dataset
-    # export_dataset(compute_signal_strength(dataset), 'computed_dataset.dat')
+    export_dataset(compute_signal_strength(dataset), 'computed_dataset.dat')
 
-    distances = get_distances(NEMO_RSSI, computed_dataset, debug=True)
+    distances = metric_1_distances(NEMO_RSSI, computed_dataset, debug=False)
     print(distances)
+
+    distances_2 = metric_2_squared(NEMO_RSSI, computed_dataset)
+    visual_bubbles(distances_2)
