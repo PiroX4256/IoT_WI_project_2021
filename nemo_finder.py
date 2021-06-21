@@ -29,7 +29,7 @@ For each antenna, find closest point to Nemo and create a polygon of closest poi
 '''
 
 
-def metric_1_distances(nemo_rssi, dataset, debug=False):
+def metric_1_distances(nemo_rssi, dataset, squared=False, debug=False):
     out = {}
     # for each antenna, nearest coordinates
     closest_points = []
@@ -39,11 +39,19 @@ def metric_1_distances(nemo_rssi, dataset, debug=False):
             for j in range(0, 11, 2):
                 if (i, j) not in dataset.keys():
                     continue
-                distances.append(math.fabs(nemo_rssi[anchor] - dataset[(i, j)][anchor]))
+                if squared:
+                    distances.append(pow(math.fabs(nemo_rssi[anchor] - dataset[(i, j)][anchor]), 2))
+                else:
+                    distances.append(math.fabs(nemo_rssi[anchor] - dataset[(i, j)][anchor]))
 
         min_distance = min(distances)
-        all_keys_min_distance = [key for key, value in dataset.items() if
-                                 math.fabs(nemo_rssi[anchor] - dataset[key][anchor]) == min_distance]
+        if squared:
+            all_keys_min_distance = [key for key, value in dataset.items() if
+                                     math.fabs(
+                                         pow(math.fabs(nemo_rssi[anchor] - dataset[key][anchor]), 2)) == min_distance]
+        else:
+            all_keys_min_distance = [key for key, value in dataset.items() if
+                                     math.fabs(nemo_rssi[anchor] - dataset[key][anchor]) == min_distance]
         closest_points.append(all_keys_min_distance)
 
     # print(closest_points)
@@ -55,7 +63,10 @@ def metric_1_distances(nemo_rssi, dataset, debug=False):
             # now compute the distance for each anchor point
             distance = 0
             for anchor in range(0, 6):
-                distance += math.fabs(nemo_rssi[anchor] - dataset[(i, j)][anchor])
+                if squared:
+                    distance += pow(math.fabs(nemo_rssi[anchor] - dataset[(i, j)][anchor]), 2)
+                else:
+                    distance += math.fabs(nemo_rssi[anchor] - dataset[(i, j)][anchor])
 
             out[(i, j)] = distance
 
