@@ -7,7 +7,7 @@ This is our submission for the Internet of Things and Wireless Internet joint pr
 First, install the requirements:
 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Then you're good to go:
