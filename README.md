@@ -2,6 +2,13 @@
 
 This is our submission for the Internet of Things and Wireless Internet joint project.
 
+## Team
+@PiroX4256
+@Vechus
+
+## Final score
+5/5
+
 ## Running the code
 
 First, install the requirements:
